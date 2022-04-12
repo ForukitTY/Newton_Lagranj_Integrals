@@ -31,6 +31,17 @@ namespace Boz3
         {
             Integral_Rectangle();
         }
+
+        private void integral_trapezoid(object sender, RoutedEventArgs e)
+        {
+            Integral_trapezoid();
+        }
+
+        private void integral_parabola(object sender, RoutedEventArgs e)
+        {
+            Integral_parabola();
+        }
+
         string Drobn(string rr)
         {
             Regex regex = new Regex(@"\d{12}\*");
@@ -116,8 +127,8 @@ namespace Boz3
                 lx[i] += "=";
 
                 lx[i] += ((x - Sokr(xi[4 / (i + 4)])) * (x - Sokr(xi[i != 2 ? 2 : 1])) * (x - Sokr(xi[i != 3 ? 3 : 1])) / znam[i]).RationalSimplify(x).ToString(); //после второго равно
-                //Fu="3(x-10)"
-                
+                                                                                                                                                                   //Fu="3(x-10)"
+
 
                 lx[i] = lx[i].Replace("0.0 ", " ");
                 lx[i] = lx[i].Replace(".0 ", "");
@@ -180,7 +191,7 @@ namespace Boz3
 
         private void Integral_Rectangle()
         {
-            //
+            //precondition
             string fx = TB2.Text;
 
             var A = Convert.ToDecimal(tbA.Text);
@@ -200,95 +211,159 @@ namespace Boz3
             var eps = Convert.ToDecimal(tbEps.Text.Replace(".", ","));
             decimal step1 = (B - A) / Convert.ToDecimal(tbN.Text);
             decimal n = Convert.ToDecimal(tbN.Text);
-
-//rectangle
             string sum = "";
             string sum2n = "";
-            
-            do
+            string sumtoEq = sum;
+            string sum2toEq = sum2n;
+
+
+            for (decimal i = A; i < B; i += step1)
             {
-                sum = "";
-                sum2n = "";
+                sum += "(" + fx.Replace("x", $"{i}") + ")+"; //сумма с прямоугольниками при n
 
-                for (decimal i = A; i < B; i += step1)
-                {
-                    sum += "(" + fx.Replace("x", $"{i}") + ")+"; //сумма с прямоугольниками
-                }
-                sum = sum.Remove(sum.Length - 1);
-                sum = Expr.Parse(sum.Replace(",", ".")).ToString();
-                sum += $"*{step1}";
-                sum = Expr.Parse(sum.Replace(",", ".")).ToString();
-
-                for (decimal i = A; i < B; i += step1 / 2)
-                {
-                    sum2n += "(" + fx.Replace("x", $"{i}") + ")" + $"*{step1/2}+"; //сумма с прямоугольниками 2n
-                }
-                sum2n = sum2n.Remove(sum2n.Length - 1);
-                sum2n = Expr.Parse(sum2n.Replace(",", ".")).ToString();
-
-                step1 /= 2;
-                n *= 2;     
             }
-            while (eps < (Math.Abs(Convert.ToDecimal(sum2n.Replace(".",",")) - Convert.ToDecimal(sum.Replace(".", ","))) / (2 ^ 1/*p*/ - 1)*2));
-            Res.Text = sum2n.ToString();
-            tbn1.Text ="n="+ (n/2).ToString();
-
-
-//trapec
-            step1 = (B - A) / Convert.ToDecimal(tbN.Text);
-            n = Convert.ToDecimal(tbN.Text);
+            sum = sum.Remove(sum.Length - 1);
+            sum = Expr.Parse(sum.Replace(",", ".")).ToString();
+            sum += $"*{step1}";
+            sum = Expr.Parse(sum.Replace(",", ".")).ToString();
+            //rectangle
             do
             {
-                sum = "";
-                sum2n = "";
 
-                for (decimal i = A; i < B; i += step1)
-                {
-                    sum += "(" + fx.Replace("x", $"{i}") + "+" + fx.Replace("x", $"{i + step1}") + ")" + $"*{step1 / 2} +"; //сумма с трапециями
-                }
-                sum = sum.Remove(sum.Length - 1);
-                sum = Expr.Parse(sum.Replace(",", ".")).ToString();
 
                 for (decimal i = A; i < B; i += step1 / 2)
                 {
-                    sum2n += "(" + fx.Replace("x", $"{i}") + "+" + fx.Replace("x", $"{i + step1}") + ")" + $"*{step1 / 2 / 2} +"; //сумма с трапециями 2n
+                    sum2n += "(" + fx.Replace("x", $"{i}") + ")" + $"*{step1 / 2}+"; //сумма с прямоугольниками 2n
                 }
                 sum2n = sum2n.Remove(sum2n.Length - 1);
                 sum2n = Expr.Parse(sum2n.Replace(",", ".")).ToString();
 
                 step1 /= 2;
                 n *= 2;
-
+                
+                sumtoEq = sum;
+                sum2toEq = sum2n;
+                sum = sum2n;
+                sum2n = "";
             }
-            while (eps < (Math.Abs(Convert.ToDecimal(sum2n.Replace(".", ",")) - Convert.ToDecimal(sum.Replace(".", ","))) / (2 ^ 2/*p*/ - 1) * 2));
-            Res_trap.Text = sum2n.ToString();
-            tbn2.Text = "n=" + (n/2).ToString();
+            while (eps < (Math.Abs(Convert.ToDecimal(sum2toEq.Replace(".", ",")) - Convert.ToDecimal(sumtoEq.Replace(".", ","))) / (2 ^ 1/*p*/ - 1) * 2));
+            Res.Text = sum2toEq.ToString();
+            tbn1.Text = "n=" + (n / 2).ToString();
+        }
+//trapec
+        private void Integral_trapezoid()
+        {
+ //precondition
+            string fx = TB2.Text;
 
- //parab
+            var A = Convert.ToDecimal(tbA.Text);
+            var B = Convert.ToDecimal(tbB.Text);
+            if (A > B)
+            {
+                MessageBox.Show("Левая граница 'a' должна быть неменьше правой 'b'!", "Неверные границы интегрирования!");
+                return;
+            }
+            if (A == B)
+            {
+                Res.Text = "0";
+                Res_trap.Text = "0";
+                Res_simp.Text = "0";
+                return;
+            }
+            var eps = Convert.ToDecimal(tbEps.Text.Replace(".", ","));
+            decimal step1 = (B - A) / Convert.ToDecimal(tbN.Text);
+            decimal n = Convert.ToDecimal(tbN.Text);
+            string sum = "";
+            string sum2n = "";
             n = Convert.ToDecimal(tbN.Text);
-            step1 = (B - A) / (2 * n);
+
+            sum = "";
+            sum2n = "";
+            string sumtoEq = sum;
+            string sum2toEq = sum2n;
+
+            for (decimal i = A; i < B; i += step1)
+            {
+                sum += "(" + fx.Replace("x", $"{i}") + "+" + fx.Replace("x", $"{i + step1}") + ")" + $"*{step1 / 2} +"; //сумма с трапециями
+            }
+            sum = sum.Remove(sum.Length - 1);
+            sum = Expr.Parse(sum.Replace(",", ".")).ToString();
+
+
             do
             {
-                sum = "";
-                sum2n = "";
-                const int kef = 4;
-                int trigger = 0;
-                sum += "(" + fx.Replace("x", $"{A}") + ")";
-                for (decimal i = A + step1; i < (B - A) / 2; i += step1)
+
+                for (decimal i = A; i < B; i += step1 / 2)
                 {
-                    sum += "+" + $"{(trigger % 2 == 0 ? kef : kef - 2)}" + "*" + "(" + fx.Replace("x", $"{i}") + ")"; //сумма с параболами
-                    trigger++;
+                    sum2n += "(" + fx.Replace("x", $"{i}") + "+" + fx.Replace("x", $"{i + step1}") + ") + "; //сумма с трапециями 2n
                 }
-                sum += "+" + "(" + fx.Replace("x", $"{B}") + ")";
-                sum = Expr.Parse(sum.Replace(",", ".")).ToString();
-                sum += "*" + $"{step1*Convert.ToDecimal(1.065) }"; //добавил множитель *h/3
-                sum = Expr.Parse(sum.Replace(",", ".")).ToString();
-                
+                sum2n ="(" + sum2n.Remove(sum2n.Length - 2) + $") * {step1 / 2 / 2}";
+                sum2n = Expr.Parse(sum2n.Replace(",", ".")).ToString();
+
+                step1 /= 2;
+                n *= 2;
+                sumtoEq = sum;
+                sum2toEq = sum2n;
+                sum = sum2n;
+                sum2n = "";
+
+            }
+            while (eps < (Math.Abs(Convert.ToDecimal(sum2toEq.Replace(".", ",")) - Convert.ToDecimal(sumtoEq.Replace(".", ","))) / (2 ^ 2/*p*/ - 1) * 2));
+            Res_trap.Text = sum2toEq.ToString();
+            tbn2.Text = "n=" + (n / 2).ToString();
+        }
+ 
+        private void Integral_parabola()
+        {
+//precondition
+            string fx = TB2.Text;
+
+            var A = Convert.ToDecimal(tbA.Text);
+            var B = Convert.ToDecimal(tbB.Text);
+            if (A > B)
+            {
+                MessageBox.Show("Левая граница 'a' должна быть неменьше правой 'b'!", "Неверные границы интегрирования!");
+                return;
+            }
+            if (A == B)
+            {
+                Res.Text = "0";
+                Res_trap.Text = "0";
+                Res_simp.Text = "0";
+                return;
+            }
+            var eps = Convert.ToDecimal(tbEps.Text.Replace(".", ","));
+            decimal step1 = (B - A) /2 * Convert.ToDecimal(tbN.Text);
+            decimal n = Convert.ToDecimal(tbN.Text);
+            string sum = "";
+            //string sum2n = "";
+//parab
+            sum += "(" + fx.Replace("x", $"{A}") + ") + 4 * (" + fx.Replace("x", $"{(A+B)/2}") + ") + (" + fx.Replace("x", $"{B}") + ")";
+            sum = Expr.Parse(sum.Replace(",", ".")).ToString();
+            sum = sum + $" * {(B - A) / 6}";
+            sum = Expr.Parse(sum.Replace(",", ".")).ToString();
+            Res_simp.Text = sum.ToString();
+            tbn3.Text = "n=" + n.ToString();
+            /*const int kef = 4;
+            int trigger = 0;
+            sum += "(" + fx.Replace("x", $"{A}") + ")";
+            for (decimal i = A + step1; i < (B - A) / 2; i += step1)
+            {
+                sum += "+" + $"{(trigger % 2 == 0 ? kef : kef - 2)}" + "*" + "(" + fx.Replace("x", $"{i}") + ")"; //сумма с параболами
+                trigger++;
+            }
+            sum += "+" + "(" + fx.Replace("x", $"{B}") + ")";
+            sum = Expr.Parse(sum.Replace(",", ".")).ToString();
+            sum += "*" + $"{step1 * Convert.ToDecimal(1.065) }"; //добавил множитель *h/3
+            sum = Expr.Parse(sum.Replace(",", ".")).ToString();
+
+            do
+            {
                 trigger = 0;
                 step1 /= 2;
                 n *= 2;
                 sum2n += "(" + fx.Replace("x", $"{A}") + ")";
-                for (decimal i = A + step1; i < (B - A) / 2; i += step1 )
+                for (decimal i = A + step1; i < (B - A) / 2; i += step1)
                 {
                     sum2n += "+" + $"{(trigger % 2 == 0 ? kef : kef - 2)}" + "*" + "(" + fx.Replace("x", $"{i}") + ")"; //сумма 2n с параболами
                     trigger++;
@@ -297,11 +372,13 @@ namespace Boz3
                 sum2n = Expr.Parse(sum2n.Replace(",", ".")).ToString();
                 sum2n += "*" + $"{step1 * Convert.ToDecimal(1.065)}"; //добавил множитель *h/3
                 sum2n = Expr.Parse(sum2n.Replace(",", ".")).ToString();
-               
             }
-            while (eps < (Math.Abs(Convert.ToDecimal(sum2n.Replace(".", ",")) - Convert.ToDecimal(sum.Replace(".", ","))) / (2 ^ 4/*p*/ - 1)));
+            while (eps < (Math.Abs(Convert.ToDecimal(sum2n.Replace(".", ",")) - Convert.ToDecimal(sum.Replace(".", ","))) / (2 ^ 4 - 1) ));
+            
             Res_simp.Text = sum2n.ToString();
-            tbn3.Text = "n=" + (n/2).ToString();                       
+            tbn3.Text = "n=" + (n / 2).ToString();
+            */
         }
+
     }
 }

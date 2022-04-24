@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Windows;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using MathNet.Symbolics;
 using Expr = MathNet.Symbolics.SymbolicExpression;
-
 namespace Boz3
 {
     public partial class MainWindow : Window
     {
-
+        IFormatProvider formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
         public MainWindow()
         {
             InitializeComponent();
@@ -122,30 +122,29 @@ namespace Boz3
 
                 res += $"{yi[i]}*(" + lx[i].Replace("=", "") + ")+";
 
-
                 // ВЫЧИСЛЕНИЯ
                 lx[i] += "=";
-
                 lx[i] += ((x - Sokr(xi[4 / (i + 4)])) * (x - Sokr(xi[i != 2 ? 2 : 1])) * (x - Sokr(xi[i != 3 ? 3 : 1])) / znam[i]).RationalSimplify(x).ToString(); //после второго равно
-                                                                                                                                                                   //Fu="3(x-10)"
-
-
                 lx[i] = lx[i].Replace("0.0 ", " ");
                 lx[i] = lx[i].Replace(".0 ", "");
                 lx[i] = Drobn(lx[i]);
-
-
-
+                               
             }
-            var Pn = SymbolicExpression.Parse(res.Replace(",", ".").Remove(res.Length - 1, 1)).RationalSimplify(x).ToString();
+            var Pn = Expr.Parse(res.Replace(",", ".").Remove(res.Length - 1, 1)).RationalSimplify(x).ToString();
+            string user_x = x_cr.Text;
+            if (Convert.ToDouble(Sokr(user_x)) < Convert.ToDouble(Sokr(xi[0])) || Convert.ToDouble(Sokr(user_x)) > Convert.ToDouble(Sokr(xi[3])))
+            {
+                MessageBox.Show("Введеная точка X не попадает в отрезок интерполияции");
+                return;
+            }
+            string f_user_x = Expr.Parse(Pn.Replace("x",user_x)).ToString();
             Pn = Drobn(Pn);
             Pn = Drobn(Pn.Replace(".0", ""));
             Pn = Pn.Replace("1*x", "x");
-            L3x += " = " + Pn;
+            L3x += " = " + Pn + "\n Значение при заданном Х = " + f_user_x;
 
             TB1.Text = L3x;
         }
-
         private void Newton()
         {
 
@@ -380,5 +379,43 @@ namespace Boz3
             */
         }
 
+        private void cramer(object sender, RoutedEventArgs e)
+        {
+            double s = 0;
+            int n = 4;
+            //размерность системы
+
+            double[,] a = {
+                { double.Parse(a00.Text,formatter), double.Parse(a01.Text,formatter), double.Parse(a02.Text,formatter), double.Parse(a03.Text,formatter)},
+                { double.Parse(a10.Text,formatter), double.Parse(a11.Text,formatter), double.Parse(a12.Text,formatter), double.Parse(a13.Text,formatter)},
+                { double.Parse(a20.Text,formatter), double.Parse(a21.Text,formatter), double.Parse(a22.Text,formatter), double.Parse(a23.Text,formatter)},
+                { double.Parse(a30.Text,formatter), double.Parse(a31.Text,formatter), double.Parse(a32.Text,formatter), double.Parse(a33.Text,formatter)},
+            };
+            double[] b = { double.Parse(b0.Text, formatter), double.Parse(b1.Text, formatter), double.Parse(b2.Text, formatter), double.Parse(b3.Text, formatter) };
+            double[] x = new double[n];
+
+            for (int k = 0; k < n - 1; k++)
+            {
+                for (int i = k + 1; i < n; i++)
+                {
+                    for (int j = k + 1; j < n; j++)
+                    {
+                        a[i, j] = a[i, j] - a[k, j] * (a[i, k] / a[k, k]);
+                    }
+                    b[i] = b[i] - b[k] * a[i, k] / a[k, k];
+                }
+            }
+
+            for (int k = n - 1; k >= 0; k--)
+            {
+                s = 0;
+                for (int j = k + 1; j < n; j++)
+                    s = s + a[k, j] * x[j];
+                x[k] = (b[k] - s) / a[k, k];
+            }
+
+            MessageBox.Show($"Система имеет следующие корни\n x1 = {Math.Round(x[0],2)}\nx2 = {Math.Round(x[1],2)}\nx3 = {Math.Round(x[2],2)}\nx4 = {Math.Round(x[3],2)}");
+
+        }
     }
 }

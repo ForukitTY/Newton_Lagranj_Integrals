@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Boz3"
         mc:Ignorable="d"
         Title="Work1" Height="520" Width="960" ShowInTaskbar="True">
-    <TabControl  Margin="0" Padding="0,2,0,0">
+    <TabControl  Margin="0" Padding="0,2,0,0" >
         <TabItem Header="Интерполяция" Margin="-2,-2,-81,0" >
             <Grid Background="#FFEAD7F9">
                 <Grid.ColumnDefinitions>
@@ -47,20 +47,18 @@
                     <TextBlock x:Name="TB1" TextWrapping="Wrap"/>
                 </ScrollViewer>
                 <Button Content="Очистить" Margin="10,0,88,10" Grid.Row="2" Click="Button_Click_1" Background="#FF999FE4" Grid.ColumnSpan="2" FontSize="16" Height="43" VerticalAlignment="Bottom"/>
-
+                <TextBlock  TextWrapping="Wrap" Margin="155,0,188,17" Grid.Row="2" Grid.ColumnSpan="2" Text="При Х = " FontSize="25" Height="35" VerticalAlignment="Bottom" Grid.Column="2"/>
                 <ComboBox Margin="10,0,10,52" Grid.Row="2" Grid.Column="4" Height="26" VerticalAlignment="Bottom"  >
 
-                    <ComboBoxItem x:Name="lag" IsSelected="True">Метод Лагранджа</ComboBoxItem>
+                    <ComboBoxItem x:Name="lag" IsSelected="True">Метод Лагранжа</ComboBoxItem>
                     <ComboBoxItem x:Name="newton" IsSelected="False">Метод Ньютона</ComboBoxItem>
 
                 </ComboBox>
+                <TextBox x:Name="x_cr" Grid.Row="2" Grid.ColumnSpan="4" Text="18" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,104,10" Height="43" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="84"/>
             </Grid>
         </TabItem>
-
-
         <TabItem Header="Интегралы" Margin="81,-2,-168,0">
             <Grid Background="#FFA3ACE2" >
-
                 <TextBlock HorizontalAlignment="Left" Height="45" Margin="15,29,0,0" TextWrapping="Wrap" Text="f(x)=" VerticalAlignment="Top" Width="67" FontSize="30"/>
                 <TextBox x:Name="TB2" Height="77" Margin="82,10,400,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="25" Text="x+1"/>
                 <TextBox x:Name="tbA" Height="43" Margin="0,13,214,0" TextWrapping="Wrap"  VerticalAlignment="Top" FontSize="24" HorizontalAlignment="Right" Width="85" Text="0"/>
@@ -87,6 +85,125 @@
                 <TextBlock x:Name="tbn3"  HorizontalAlignment="Left" Margin="745,359,0,0" TextWrapping="Wrap" Text="n=" VerticalAlignment="Top" Height="25" Width="85"/>
                 <Button Content="Посчитать" Margin="0,287,214,0" VerticalAlignment="Top" Height="36" HorizontalAlignment="Right" Width="107" Click="integral_trapezoid"/>
                 <Button Content="Посчитать" Margin="0,349,214,0" VerticalAlignment="Top" Height="36" HorizontalAlignment="Right" Width="107" Click="integral_parabola"/>
+
+            </Grid>
+        </TabItem>
+        <TabItem Header="Метод Гаусса" Margin="168,-2,-257,0">
+            <Grid Background="DarkGray" Margin="0,-2,0,-6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="23"/>
+                    <ColumnDefinition Width="76"/>
+                    <ColumnDefinition Width="44*"/>
+                    <ColumnDefinition Width="75*"/>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="71*"/>
+                    <ColumnDefinition Width="46*"/>
+                    <ColumnDefinition Width="73*"/>
+                    <ColumnDefinition Width="34*"/>
+                    <ColumnDefinition Width="26*"/>
+                    <ColumnDefinition Width="91*"/>
+                    <ColumnDefinition Width="341*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="41*"/>
+                    <RowDefinition Height="46*"/>
+                    <RowDefinition Height="46*"/>
+                    <RowDefinition Height="46*"/>
+                    <RowDefinition Height="284*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.RowSpan="4"  Text=" " FontSize="30" />
+                <TextBlock Grid.Row="0" Grid.Column="9"  Text="=" FontSize="30" />
+                <TextBlock Grid.Row="1" Grid.Column="9"  Text="=" FontSize="30" />
+                <TextBlock Grid.Row="2" Grid.Column="9"  Text="=" FontSize="30" />
+                <TextBlock Grid.Row="3" Grid.Column="9"  Text="=" FontSize="30" />
+
+                <TextBox Name="a00" Grid.Row="0" Grid.Column="1" Text="2" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a01"  Grid.Row="0" Grid.Column="3" Text="1" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a02" Grid.Row="0" Grid.Column="5" Text="-1" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a03" Grid.Row="0" Grid.Column="7" Text="3" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a10" Grid.Row="1" Grid.Column="1" Text="5" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a11" Grid.Row="1" Grid.Column="3" Text="-1" TextAlignment="Center"  FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a12" Grid.Row="1" Grid.Column="5" Text="2" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a13" Grid.Row="1" Grid.Column="7" Text="-1" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                <TextBox Name="a20" Grid.Row="2" Grid.Column="1" Text="-3" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a21"  Grid.Row="2" Grid.Column="3" Text="2" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a22" Grid.Row="2" Grid.Column="5" Text="-1" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a23" Grid.Row="2" Grid.Column="7" Text="2" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a30" Grid.Row="3" Grid.Column="1" Text="1" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a31" Grid.Row="3" Grid.Column="3" Text="-1" TextAlignment="Center"  FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a32" Grid.Row="3" Grid.Column="5" Text="4" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="a33" Grid.Row="3" Grid.Column="7" Text="-5" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                <TextBox Name="b0" Grid.Row="0" Grid.Column="10" Text="20" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="b1" Grid.Row="1" Grid.Column="10" Text="17" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="b2" Grid.Row="2" Grid.Column="10" Text="1" TextAlignment="Center"  FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="b3" Grid.Row="3" Grid.Column="10" Text="-4" TextAlignment="Center" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" TextAlignment="Center" HorizontalAlignment="left" Width="44"><Run FontSize="30" Text="x"/><Run Text=" "/><Run FontStyle="Italic" FontSize="15" Text="1"/><Run FontSize="26" Text="+"/></TextBlock>
+                <TextBlock  Grid.Row="1" Grid.Column="2" TextAlignment="Center" HorizontalAlignment="left" Width="41"><Run FontSize="30" Text="x"/><Run Text=" "/><Run FontStyle="Italic" FontSize="15" Text="1"/><Run FontSize="26" Text="+"/></TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="left" Width="50">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">2</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="1" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="left" Width="50">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">2</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="6" TextAlignment="Center" HorizontalAlignment="left" Width="46">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">2</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="1" Grid.Column="6" TextAlignment="Center" HorizontalAlignment="left" Width="46">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">3</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="8" TextAlignment="Center" HorizontalAlignment="left" Width="27">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">4</Run>
+                </TextBlock>
+                <TextBlock  Grid.Row="1" Grid.Column="8" TextAlignment="Center" HorizontalAlignment="left" Width="27">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">4</Run>
+                </TextBlock>
+                <TextBlock  Grid.Row="2" Grid.Column="2" TextAlignment="Center" HorizontalAlignment="left" Width="44"><Run FontSize="30" Text="x"/><Run Text=" "/><Run FontStyle="Italic" FontSize="15" Text="1"/><Run FontSize="26" Text="+"/></TextBlock>
+                <TextBlock  Grid.Row="2" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="left" Width="50">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">2</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="2" Grid.Column="6" TextAlignment="Center" HorizontalAlignment="Left" Width="46">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">3</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="2" Grid.Column="8" TextAlignment="Center" HorizontalAlignment="left" Width="27">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">4</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="3" Grid.Column="2" TextAlignment="Center" HorizontalAlignment="left" Width="44"><Run FontSize="30" Text="x"/><Run Text=" "/><Run FontStyle="Italic" FontSize="15" Text="1"/><Run FontSize="26" Text="+"/></TextBlock>
+                <TextBlock  Grid.Row="3" Grid.Column="4" TextAlignment="Center" HorizontalAlignment="left" Width="50">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">2</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="3" Grid.Column="6" TextAlignment="Center" HorizontalAlignment="left" Width="46">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">3</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <TextBlock  Grid.Row="3" Grid.Column="8" TextAlignment="Center" HorizontalAlignment="left" Width="27">
+                     <Run FontSize="30">x</Run>
+                    <Run FontSize="15" FontStyle="Italic">4</Run>
+                    <Run Text="+" FontSize="26"/>
+                </TextBlock>
+                <Button Content="Посчитать" Margin="0,238,10,0" VerticalAlignment="Top" Height="36" HorizontalAlignment="Right" Width="107" Click="cramer" Grid.Column="11" Grid.Row="4"/>
 
             </Grid>
         </TabItem>

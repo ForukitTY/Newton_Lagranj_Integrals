@@ -132,7 +132,7 @@ namespace Boz3
             }
             var Pn = Expr.Parse(res.Replace(",", ".").Remove(res.Length - 1, 1)).RationalSimplify(x).ToString();
             string user_x = x_cr.Text;
-            if (Convert.ToDouble(Sokr(user_x)) < Convert.ToDouble(Sokr(xi[0])) || Convert.ToDouble(Sokr(user_x)) > Convert.ToDouble(Sokr(xi[3])))
+            if (Convert.ToDouble(Sokr(user_x)) < Convert.ToDouble(Sokr(xi[0])) | Convert.ToDouble(Sokr(user_x)) > Convert.ToDouble(Sokr(xi[3])))
             {
                 MessageBox.Show("Введеная точка X не попадает в отрезок интерполияции");
                 return;

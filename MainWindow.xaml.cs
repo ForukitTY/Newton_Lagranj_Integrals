@@ -152,7 +152,12 @@ namespace Boz3
 
             double[] dyi = { Sokr(y1.Text), Sokr(y2.Text), Sokr(y3.Text), Sokr(y4.Text) };
             double[] dxi = { Sokr(x1.Text), Sokr(x2.Text), Sokr(x3.Text), Sokr(x4.Text) };
-
+            string user_x = x_cr.Text;
+            if (Convert.ToDouble(Sokr(user_x)) < dyi[0] | Convert.ToDouble(Sokr(user_x)) > dyi[0])
+            {
+                MessageBox.Show("Введеная точка X не попадает в отрезок интерполияции");
+                return;
+            }
             double[][] ddeli = { dyi, new double[3], new double[2], new double[1] };
 
             TB1.Text = "Полином Ньютона:\nN(x) = ";
@@ -184,8 +189,11 @@ namespace Boz3
             var Pn = Expr.Parse(res.Replace(",", ".")).RationalSimplify(x).ToString();
             Pn = Drobn(Pn.Replace(".0", ""));
             Pn = Pn.Replace("1*x", "x");
+
+            string f_user_x = Expr.Parse(Pn.Replace("x", user_x)).ToString();
+
             TB1.Text = Drobn(TB1.Text);
-            TB1.Text += " = " + Pn;
+            TB1.Text += " = " + Pn + "\n Значение при заданном Х = " + f_user_x;
         }
 
         private void Integral_Rectangle()

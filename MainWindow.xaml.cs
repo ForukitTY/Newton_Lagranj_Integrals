@@ -153,7 +153,7 @@ namespace Boz3
             double[] dyi = { Sokr(y1.Text), Sokr(y2.Text), Sokr(y3.Text), Sokr(y4.Text) };
             double[] dxi = { Sokr(x1.Text), Sokr(x2.Text), Sokr(x3.Text), Sokr(x4.Text) };
             string user_x = x_cr.Text;
-            if (Convert.ToDouble(Sokr(user_x)) < dyi[0] | Convert.ToDouble(Sokr(user_x)) > dyi[0])
+            if (Convert.ToDouble(Sokr(user_x)) < dxi[0] | Convert.ToDouble(Sokr(user_x)) > dxi[3])
             {
                 MessageBox.Show("Введеная точка X не попадает в отрезок интерполияции");
                 return;

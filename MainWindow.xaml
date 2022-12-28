@@ -80,9 +80,9 @@
                 <TextBox x:Name="tbEps" Height="39" Margin="0,84,29,0" TextWrapping="Wrap"  VerticalAlignment="Top" FontSize="24" HorizontalAlignment="Right" Width="86" Text="0.5"/>
                 <TextBlock Margin="0,85,120,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" Height="39" HorizontalAlignment="Right" Width="33" ><Run Text="е"/><Run Text="="/></TextBlock>
                 <TextBlock Margin="0,129,14,0" TextWrapping="Wrap" Text="Погрешность" VerticalAlignment="Top" Height="20" HorizontalAlignment="Right" Width="147" FontWeight="Bold" TextAlignment="Center"/>
-                <TextBlock x:Name="tbn1"  HorizontalAlignment="Left" Margin="745,237,0,0" TextWrapping="Wrap" Text="n=" VerticalAlignment="Top" Height="25" Width="85"/>
-                <TextBlock x:Name="tbn2"  HorizontalAlignment="Left" Margin="745,297,0,0" TextWrapping="Wrap" Text="n=" VerticalAlignment="Top" Height="25" Width="85"/>
-                <TextBlock x:Name="tbn3"  HorizontalAlignment="Left" Margin="745,359,0,0" TextWrapping="Wrap" Text="n=" VerticalAlignment="Top" Height="25" Width="85"/>
+                <TextBlock x:Name="tbn1"  HorizontalAlignment="Right" Margin="745,237,0,0" TextWrapping="Wrap" Text="n=" VerticalAlignment="Top"  Height="25" Width="85"/>
+                <TextBlock x:Name="tbn2"  HorizontalAlignment="Right" Margin="745,297,0,0" TextWrapping="Wrap" Text="n=" VerticalAlignment="Top" Height="25" Width="85"/>
+                <TextBlock x:Name="tbn3"  HorizontalAlignment="Right" Margin="745,359,0,0" TextWrapping="Wrap" Text="n=" VerticalAlignment="Top" Height="25" Width="85"/>
                 <Button Content="Посчитать" Margin="0,287,214,0" VerticalAlignment="Top" Height="36" HorizontalAlignment="Right" Width="107" Click="integral_trapezoid"/>
                 <Button Content="Посчитать" Margin="0,349,214,0" VerticalAlignment="Top" Height="36" HorizontalAlignment="Right" Width="107" Click="integral_parabola"/>
 
